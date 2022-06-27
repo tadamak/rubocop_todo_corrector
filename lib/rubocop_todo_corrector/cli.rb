@@ -6,10 +6,15 @@ module RubocopTodoCorrector
   # Provide CLI sub-commands.
   class Cli < ::Thor
     desc 'bundle', 'Run `bundle install` to install RuboCop related gems.'
+    option(
+      :gemfile_lock_path,
+      default: 'Gemfile.lock',
+      type: :string
+    )
     def bundle
       Commands::Bundle.call(
         rubocop_configuration_path: '.rubocop.yml',
-        gemfile_lock_path: 'Gemfile.lock',
+        gemfile_lock_path: options[:gemfile_lock_path],
         temporary_gemfile_path: 'tmp/Gemfile_rubocop_todo_corrector.rb'
       )
     end
